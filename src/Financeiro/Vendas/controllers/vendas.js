@@ -99,6 +99,7 @@ class FinanceiroVendasControllers {
     }
   }
 
+  
   async getListaVendasTotalMagazine(req, res) {
     let { dataPesquisaMagazine, idGrupo, page, pageSize } = req.query;
 
