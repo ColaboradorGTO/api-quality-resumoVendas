@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import corsMiddleware from './middlewares/cors.js'
-import routes from './routes.js'
+import corsMiddleware from './middlewares/cors.js';
+import routes from './Routes/routes.js';
 
 import bodyParser from 'body-parser';
 import 'dotenv/config';
@@ -19,7 +19,7 @@ class App {
         this.server.use(cors({
             // origin: ['http://164.152.245.77:8000', 'http://localhost:5173'],
             // origin: ['http://localhost:5173'],
-            origin: ['https://quality-resumo-vendas.vercel.app'],
+            origin: ['https://confidencial-api.vercel.app', 'https://quality-tau.vercel.app'],
             credentials: true,
             timeout: 50000,
             methods: ["GET", "POST", "PUT", "DELETE"],
@@ -37,12 +37,13 @@ class App {
             credentials: true,
             preflightContinue: true,
         }));
-
+        this.server.use(express.json({ limit: '100mb' }));
+        this.server.use(express.urlencoded({ limit: '100mb', extended: true }));
         this.server.use(express.json());
         this.server.use(corsMiddleware);
         this.server.use(bodyParser.json({ limit: '100mb', extended: true }));
         this.server.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
-        this.server.use('/files', express.static(path.resolve(__dirname, '..', 'uploads')));
+        this.server.use('/files', express.static(path.resolve(__dirname, '..', 'uploads'))); 
     }
 
     routes() {
